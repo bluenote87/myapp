@@ -4,5 +4,12 @@
 </head>
 <body>
 
+<nav th:replace="fragments :: navigation"></nav>
+
+<div class="container">
+    <p>Found the following measurement:</p>
+    <p th:text="${return}"></p>
+</div>
+
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.practice.myapp.models;
 
 import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Size;
 
 public class Measurements {
 
@@ -8,16 +9,18 @@ public class Measurements {
     private String unit;
     private String unitValue;
     @NotNull
-    private String latitude;
+    //@Size(min=-90, max=90, message="Input needs to be greater than -90° (South Pole) or less than 90° (North Pole)")
+    private double latitude;
     @NotNull
-    private String longitude;
+    //@Size(min=-180, max=180, message="Input needs to be between -180° and 180°")
+    private double longitude;
     @NotNull
-    private String distance;
+    private int distance;
 
     public Measurements() {
     }
 
-    public Measurements(String latitude, String longitude, String distance) {
+    public Measurements(double latitude, double longitude, int distance) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.distance = distance;
@@ -39,27 +42,27 @@ public class Measurements {
         this.unitValue = unitValue;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public String getDistance() {
+    public int getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 

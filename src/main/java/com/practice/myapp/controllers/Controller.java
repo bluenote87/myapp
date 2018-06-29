@@ -1,5 +1,6 @@
 package com.practice.myapp.controllers;
 
+//import com.google.gson.Gson;
 import com.practice.myapp.models.Measurements;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -8,15 +9,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 @org.springframework.stereotype.Controller
-@RequestMapping("location")
+@RequestMapping("/")
 public class Controller {
+
+    private String BaseURL;
+    private String decodedString;
+    private String output;
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("title", "Pick A Location");
+        model.addAttribute("measurements", new Measurements());
 
         return "index";
     }
@@ -24,11 +36,39 @@ public class Controller {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String result(Model model,
                          @ModelAttribute @Valid Measurements newMeasurement,
-                         Errors errors,
-                         @RequestParam int aDistance,
-                         @RequestParam double aLatitude,
-                         @RequestParam double aLongitude) {
+                         Errors errors) throws IOException {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Pick A Location");
+            return "index";
+        }
+
+        output = "";
+        decodedString = "";
+        int aDistance = newMeasurement.getDistance();
+        double aLatitude = newMeasurement.getLatitude();
+        double aLongitude = newMeasurement.getLongitude();
+
+        BaseURL = "https://api.safecast.org/measurements.json";
+
+        //Gson gson = new Gson();
+
+        HttpsURLConnection apiCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
+            + "&latitude=" + aLatitude + "&longitude=" + aLongitude).openConnection());
+        apiCall.setDoOutput(true);
+        apiCall.setRequestProperty("Content-Type", "application/json");
+        apiCall.setRequestProperty("Accept", "application/json");
+        apiCall.setRequestMethod("GET");
+        apiCall.connect();
+
+        BufferedReader inreader = new BufferedReader(new InputStreamReader(apiCall.getInputStream()));
+        while ((decodedString = inreader.readLine()) != null) output += "\n" + decodedString;
+
+        inreader.close();
+        apiCall.disconnect();
+
         model.addAttribute("title", "Current readings at the given location");
+        model.addAttribute("return", output);
 
         return "result";
     }
