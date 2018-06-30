@@ -1,29 +1,23 @@
 package com.practice.myapp.models;
 
-import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Size;
-
 public class Measurements {
 
-    private String timestamp;
+    private String captured_at;
     private String unit;
-    private String unitValue;
-    @NotNull
-    //@Size(min=-90, max=90, message="Input needs to be greater than -90° (South Pole) or less than 90° (North Pole)")
+    private double value;
     private double latitude;
-    @NotNull
-    //@Size(min=-180, max=180, message="Input needs to be between -180° and 180°")
     private double longitude;
-    @NotNull
     private int distance;
 
     public Measurements() {
     }
 
-    public Measurements(double latitude, double longitude, int distance) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.distance = distance;
+    public Measurements(String captured_at, String unit, double value, double latitude, double longitude) {
+        this.captured_at=captured_at;
+        this.unit=unit;
+        this.value=value;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
     public String getUnit() {
@@ -34,12 +28,12 @@ public class Measurements {
         this.unit = unit;
     }
 
-    public String getUnitValue() {
-        return unitValue;
+    public double getValue() {
+        return value;
     }
 
-    public void setUnitValue(String unitValue) {
-        this.unitValue = unitValue;
+    public void setValue(double value) {
+        this.value=value;
     }
 
     public double getLatitude() {
@@ -58,19 +52,19 @@ public class Measurements {
         this.longitude = longitude;
     }
 
+    public String getCaptured_at() {
+        return captured_at;
+    }
+
+    public void setCaptured_at(String captured_at) {
+        this.captured_at=captured_at;
+    }
+
     public int getDistance() {
         return distance;
     }
 
     public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+        this.distance=distance;
     }
 }

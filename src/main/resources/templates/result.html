@@ -7,8 +7,28 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <div class="container">
-    <p>Found the following measurement:</p>
-    <p th:text="${return}"></p>
+    <p>Found the following measurements:</p>
+    <p th:unless="${return} and ${return.size()}">No results 🤔</p>
+    <table class="table-striped">
+        <thead>
+        <tr>
+            <th>Unit</th>
+            <th>Value</th>
+            <th>Time Captured</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${result}">
+            <td th:text="{$result.unit}"></td>
+            <td th:text="{$result.value}"></td>
+            <td th:text="{$result.captured_at}"></td>
+            <td th:text="{$result.latitude} + '°'"></td>
+            <td th:text="{$result.longitude} + '°'"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 </body>

@@ -1,20 +1,23 @@
 package com.practice.myapp.controllers;
 
-//import com.google.gson.Gson;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.practice.myapp.models.Measurements;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/")
@@ -22,7 +25,8 @@ public class Controller {
 
     private String BaseURL;
     private String decodedString;
-    private String output;
+    private String json;
+    //private ArrayList<Measurements> apiReturns = new ArrayList<>();
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -43,15 +47,15 @@ public class Controller {
             return "index";
         }
 
-        output = "";
         decodedString = "";
+        //apiReturns.clear();
         int aDistance = newMeasurement.getDistance();
         double aLatitude = newMeasurement.getLatitude();
         double aLongitude = newMeasurement.getLongitude();
 
         BaseURL = "https://api.safecast.org/measurements.json";
 
-        //Gson gson = new Gson();
+        Gson gson = new Gson();
 
         HttpsURLConnection apiCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
             + "&latitude=" + aLatitude + "&longitude=" + aLongitude).openConnection());
@@ -62,13 +66,19 @@ public class Controller {
         apiCall.connect();
 
         BufferedReader inreader = new BufferedReader(new InputStreamReader(apiCall.getInputStream()));
-        while ((decodedString = inreader.readLine()) != null) output += "\n" + decodedString;
+        while ((decodedString = inreader.readLine()) != null) {
+            json += decodedString;
+        }
 
         inreader.close();
         apiCall.disconnect();
 
+        Type collectionType = new TypeToken<Collection<Measurements>>(){}.getType();
+        Collection<Measurements> safeCastReturns = gson.fromJson(json, collectionType);
+
+
         model.addAttribute("title", "Current readings at the given location");
-        model.addAttribute("return", output);
+        model.addAttribute("return", safeCastReturns);
 
         return "result";
     }
