@@ -1,6 +1,7 @@
 package com.practice.myapp.controllers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.practice.myapp.models.Measurements;
 import org.springframework.ui.Model;
@@ -48,6 +49,7 @@ public class Controller {
         }
 
         decodedString = "";
+        json = "";
         //apiReturns.clear();
         int aDistance = newMeasurement.getDistance();
         double aLatitude = newMeasurement.getLatitude();
@@ -55,7 +57,7 @@ public class Controller {
 
         BaseURL = "https://api.safecast.org/measurements.json";
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
         HttpsURLConnection apiCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
             + "&latitude=" + aLatitude + "&longitude=" + aLongitude).openConnection());

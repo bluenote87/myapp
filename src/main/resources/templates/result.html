@@ -20,12 +20,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="entry : ${result}">
-            <td th:text="{$result.unit}"></td>
-            <td th:text="{$result.value}"></td>
-            <td th:text="{$result.captured_at}"></td>
-            <td th:text="{$result.latitude} + '°'"></td>
-            <td th:text="{$result.longitude} + '°'"></td>
+        <tr th:each="entry : ${return}">
+            <td th:text="${entry.unit}"></td>
+            <td th:text="${entry.value}"></td>
+            <td th:text="${entry.captured_at}"></td>
+            <td th:text="${entry.latitude} + '°'"></td>
+            <td th:text="${entry.longitude} + '°'"></td>
         </tr>
         </tbody>
     </table>
