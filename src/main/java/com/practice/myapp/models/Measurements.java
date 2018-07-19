@@ -2,6 +2,10 @@ package com.practice.myapp.models;
 
 import com.google.gson.annotations.Expose;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class Measurements {
 
     @Expose
@@ -33,9 +37,14 @@ public class Measurements {
     @Expose
     private int channel_id;
     @Expose
+    @NotNull
     private double latitude;
     @Expose
+    @NotNull
     private double longitude;
+    @Min(10)
+    @Max(1000)
+    @NotNull
     private int distance;
 
     public Measurements() {
@@ -58,7 +67,7 @@ public class Measurements {
         this.channel_id = channel_id;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.distance = 0;
+        this.distance = 10;
     }
 
     public String getUnit() {

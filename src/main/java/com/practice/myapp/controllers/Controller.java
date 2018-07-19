@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @org.springframework.stereotype.Controller
@@ -27,7 +26,7 @@ public class Controller {
     private String BaseURL;
     private String decodedString;
     private String json;
-    //private ArrayList<Measurements> apiReturns = new ArrayList<>();
+    private String mapsKey = "AIzaSyDen0WZLZt-OQ68yU5D5uoNb7sr34mdycQ";
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -81,6 +80,9 @@ public class Controller {
 
         model.addAttribute("title", "Current readings at the given location");
         model.addAttribute("return", safeCastReturns);
+        model.addAttribute("latitude", aLatitude);
+        model.addAttribute("longitude", aLongitude);
+        model.addAttribute("key", mapsKey);
 
         return "result";
     }

@@ -7,28 +7,38 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <div class="container">
-    <p>Found the following measurements:</p>
+    <h3>Found the following measurements:</h3>
     <p th:unless="${return} and ${return.size()}">No results 🤔</p>
-    <table class="table-striped">
-        <thead>
-        <tr>
-            <th>Unit</th>
-            <th>Value</th>
-            <th>Time Captured</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="entry : ${return}">
-            <td th:text="${entry.unit}"></td>
-            <td th:text="${entry.value}"></td>
-            <td th:text="${entry.captured_at}"></td>
-            <td th:text="${entry.latitude} + '°'"></td>
-            <td th:text="${entry.longitude} + '°'"></td>
-        </tr>
-        </tbody>
-    </table>
+</div>
+
+<div class="container-fluid" th:if="${return} and ${return.size()}">
+    <div class="row">
+        <div class="col">
+            <table class="table-striped" style="padding:10px">
+                <thead>
+                    <tr>
+                        <th>Unit</th>
+                        <th>Value</th>
+                        <th>Time Captured</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="entry : ${return}">
+                        <td th:text="${entry.unit}"></td>
+                        <td th:text="${entry.value}"></td>
+                        <td th:text="${entry.captured_at}"></td>
+                        <td th:text="${entry.latitude} + '°'"></td>
+                        <td th:text="${entry.longitude} + '°'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <iframe width="600" height="450" frameborder="0" style="border: 2px solid MediumSeaGreen" th:attr="src='https://www.google.com/maps/embed/v1/view?zoom=17&amp;center=' + ${latitude} + '%2C' + ${longitude} + '&amp;key=' + ${key}"></iframe>
+        </div>
+    </div>
 </div>
 
 </body>
