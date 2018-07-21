@@ -9,9 +9,9 @@ public class Pollutant {
     }
 
     public Pollutant(int conc, int aqius, int aqicn) {
-        this.conc = conc;
-        this.aqius = aqius;
-        this.aqicn = aqicn;
+        this.conc=conc;
+        this.aqius=aqius;
+        this.aqicn=aqicn;
     }
 
     public int getConc() {
@@ -19,7 +19,7 @@ public class Pollutant {
     }
 
     public void setConc(int conc) {
-        this.conc = conc;
+        this.conc=conc;
     }
 
     public int getAqius() {
@@ -27,7 +27,7 @@ public class Pollutant {
     }
 
     public void setAqius(int aqius) {
-        this.aqius = aqius;
+        this.aqius=aqius;
     }
 
     public int getAqicn() {
@@ -35,6 +35,6 @@ public class Pollutant {
     }
 
     public void setAqicn(int aqicn) {
-        this.aqicn = aqicn;
+        this.aqicn=aqicn;
     }
 }

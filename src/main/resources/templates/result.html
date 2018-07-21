@@ -14,7 +14,7 @@
 <div class="container-fluid" th:if="${return} and ${return.size()}">
     <div class="row">
         <div class="col">
-            <table class="table-striped" style="padding:10px">
+            <table class="table-striped" style="padding:8px">
                 <thead>
                     <tr>
                         <th>Unit</th>
@@ -36,7 +36,29 @@
             </table>
         </div>
         <div class="col">
-            <iframe width="600" height="450" frameborder="0" style="border: 2px solid MediumSeaGreen" th:attr="src='https://www.google.com/maps/embed/v1/view?zoom=17&amp;center=' + ${latitude} + '%2C' + ${longitude} + '&amp;key=' + ${key}"></iframe>
+            <iframe width="475" height="350" frameborder="0" style="border: 2px solid MediumSeaGreen" th:attr="src='https://www.google.com/maps/embed/v1/view?zoom=15&amp;center=' + ${latitude} + '%2C' + ${longitude} + '&amp;key=' + ${key}"></iframe>
+        </div>
+        <div class="col">
+            <table class="table-striped" style="padding:8px">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>AQI</th>
+                        <th>Wind Direction</th>
+                        <th>Wind Speed</th>
+                        <th>Time Captured</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="${aqi.data.city}"></td>
+                        <td th:text="${aqi.data.current.pollution.aqius}"></td>
+                        <td th:text="${aqi.data.current.weather.wd}"></td>
+                        <td th:text="${aqi.data.current.weather.ws}"></td>
+                        <td th:text="${aqi.data.current.pollution.ts}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

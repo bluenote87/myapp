@@ -3,6 +3,7 @@ package com.practice.myapp.controllers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.practice.myapp.models.AirQuality;
 import com.practice.myapp.models.Measurements;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,15 +19,20 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/")
 public class Controller {
 
     private String BaseURL;
+    private String AqiURL;
     private String decodedString;
     private String json;
+    private String aqiDecodedString;
+    private String aqiJson;
     private String mapsKey = "AIzaSyDen0WZLZt-OQ68yU5D5uoNb7sr34mdycQ";
+    private String aqiKey = "3RDkWgP8CSpxMTGFM";
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -49,40 +55,69 @@ public class Controller {
 
         decodedString = "";
         json = "";
-        //apiReturns.clear();
+        aqiDecodedString = "";
+        aqiJson = "";
         int aDistance = newMeasurement.getDistance();
         double aLatitude = newMeasurement.getLatitude();
         double aLongitude = newMeasurement.getLongitude();
 
         BaseURL = "https://api.safecast.org/measurements.json";
+        AqiURL = "https://api.airvisual.com/v2/nearest_city";
 
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        Gson aqiGson = new Gson();
 
         HttpsURLConnection apiCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
             + "&latitude=" + aLatitude + "&longitude=" + aLongitude).openConnection());
-        apiCall.setDoOutput(true);
         apiCall.setRequestProperty("Content-Type", "application/json");
         apiCall.setRequestProperty("Accept", "application/json");
         apiCall.setRequestMethod("GET");
         apiCall.connect();
 
-        BufferedReader inreader = new BufferedReader(new InputStreamReader(apiCall.getInputStream()));
-        while ((decodedString = inreader.readLine()) != null) {
-            json += decodedString;
+        try {
+            BufferedReader inreader = new BufferedReader(new InputStreamReader(apiCall.getInputStream()));
+            while ((decodedString=inreader.readLine()) != null) {
+                json+=decodedString;
+            }
+            inreader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        inreader.close();
         apiCall.disconnect();
+
+        HttpsURLConnection aqiCall = (HttpsURLConnection) (new URL(AqiURL + "?lat=" + aLatitude
+            + "&lon=" + aLongitude + "&key=" + aqiKey)).openConnection();
+
+        aqiCall.setRequestProperty("Content-Type", "application/json");
+        aqiCall.setRequestProperty("Accept", "application/json");
+        aqiCall.setRequestMethod("GET");
+        aqiCall.connect();
+
+        try {
+            BufferedReader aqiReader = new BufferedReader(new InputStreamReader(aqiCall.getInputStream()));
+            while ((aqiDecodedString=aqiReader.readLine()) != null) {
+                aqiJson+=aqiDecodedString;
+            }
+            aqiReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        aqiCall.disconnect();
 
         Type collectionType = new TypeToken<Collection<Measurements>>(){}.getType();
         Collection<Measurements> safeCastReturns = gson.fromJson(json, collectionType);
 
+        //Type aqiType = new TypeToken<Collection<AirQuality>>(){}.getType();
+        AirQuality airVisualReturn = aqiGson.fromJson(aqiJson, AirQuality.class);
 
         model.addAttribute("title", "Current readings at the given location");
         model.addAttribute("return", safeCastReturns);
         model.addAttribute("latitude", aLatitude);
         model.addAttribute("longitude", aLongitude);
         model.addAttribute("key", mapsKey);
+        model.addAttribute("aqi", airVisualReturn);
 
         return "result";
     }

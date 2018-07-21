@@ -5,21 +5,21 @@ public class Weather {
     private int tp;
     private int pr;
     private int hu;
-    private int ws;
+    private double ws;
     private int wd;
     private String ic;
 
     public Weather() {
     }
 
-    public Weather(String ts, int tp, int pr, int hu, int ws, int wd, String ic) {
-        this.ts = ts;
-        this.tp = tp;
-        this.pr = pr;
-        this.hu = hu;
-        this.ws = ws;
-        this.wd = wd;
-        this.ic = ic;
+    public Weather(String ts, int tp, int pr, int hu, double ws, int wd, String ic) {
+        this.ts=ts;
+        this.tp=tp;
+        this.pr=pr;
+        this.hu=hu;
+        this.ws=ws;
+        this.wd=wd;
+        this.ic=ic;
     }
 
     public String getTs() {
@@ -27,7 +27,7 @@ public class Weather {
     }
 
     public void setTs(String ts) {
-        this.ts = ts;
+        this.ts=ts;
     }
 
     public int getTp() {
@@ -35,7 +35,7 @@ public class Weather {
     }
 
     public void setTp(int tp) {
-        this.tp = tp;
+        this.tp=tp;
     }
 
     public int getPr() {
@@ -43,7 +43,7 @@ public class Weather {
     }
 
     public void setPr(int pr) {
-        this.pr = pr;
+        this.pr=pr;
     }
 
     public int getHu() {
@@ -51,15 +51,15 @@ public class Weather {
     }
 
     public void setHu(int hu) {
-        this.hu = hu;
+        this.hu=hu;
     }
 
-    public int getWs() {
+    public double getWs() {
         return ws;
     }
 
-    public void setWs(int ws) {
-        this.ws = ws;
+    public void setWs(double ws) {
+        this.ws=ws;
     }
 
     public int getWd() {
@@ -67,7 +67,7 @@ public class Weather {
     }
 
     public void setWd(int wd) {
-        this.wd = wd;
+        this.wd=wd;
     }
 
     public String getIc() {
@@ -75,6 +75,6 @@ public class Weather {
     }
 
     public void setIc(String ic) {
-        this.ic = ic;
+        this.ic=ic;
     }
 }

@@ -1,6 +1,6 @@
 package com.practice.myapp.models;
 
-public class Location {
+public class Location extends Data {
 
     private String type;
     private double latitude;
