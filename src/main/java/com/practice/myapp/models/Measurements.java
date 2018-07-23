@@ -1,6 +1,7 @@
 package com.practice.myapp.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,39 +10,55 @@ import javax.validation.constraints.NotNull;
 public class Measurements {
 
     @Expose
-    private int id;
+    @SerializedName("id")
+    private int radId;
     @Expose
-    private int user_id;
+    @SerializedName("user_id")
+    private int radUserId;
     @Expose
-    private double value;
+    @SerializedName("value")
+    private double radValue;
     @Expose
-    private String unit;
+    @SerializedName("unit")
+    private String radUnit;
     @Expose
-    private String location_name;
+    @SerializedName("location_name")
+    private String radLocationName;
     @Expose
-    private int device_id;
+    @SerializedName("device_id")
+    private int radDeviceId;
     @Expose
-    private int original_id;
+    @SerializedName("original_id")
+    private int radOriginalId;
     @Expose
-    private int measurement_import_id;
+    @SerializedName("mesaurement_import_id")
+    private int radMeasurementImportId;
     @Expose
-    private String captured_at;
+    @SerializedName("captured_at")
+    private String radTimestamp;
     @Expose
-    private double height;
+    @SerializedName("height")
+    private double radHeight;
     @Expose
-    private int devicetype_id;
+    @SerializedName("devicetype_id")
+    private int radDevicetypeId;
     @Expose
-    private int sensor_id;
+    @SerializedName("sensor_id")
+    private int radSensorId;
     @Expose
-    private int station_id;
+    @SerializedName("station_id")
+    private int radStationId;
     @Expose
-    private int channel_id;
+    @SerializedName("channel_id")
+    private int radChannelId;
     @Expose
     @NotNull
-    private double latitude;
+    @SerializedName("latitude")
+    private double radLat;
     @Expose
     @NotNull
-    private double longitude;
+    @SerializedName("longitude")
+    private double radLng;
     @Min(10)
     @Max(1000)
     @NotNull
@@ -50,152 +67,152 @@ public class Measurements {
     public Measurements() {
     }
 
-    public Measurements(int id, int user_id, double value, String unit, String location_name, int device_id, int original_id, int measurement_import_id, String captured_at, double height, int devicetype_id, int sensor_id, int station_id, int channel_id, double latitude, double longitude) {
-        this.id = id;
-        this.user_id = user_id;
-        this.value = value;
-        this.unit = unit;
-        this.location_name = location_name;
-        this.device_id = device_id;
-        this.original_id = original_id;
-        this.measurement_import_id = measurement_import_id;
-        this.captured_at = captured_at;
-        this.height = height;
-        this.devicetype_id = devicetype_id;
-        this.sensor_id = sensor_id;
-        this.station_id = station_id;
-        this.channel_id = channel_id;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Measurements(int radId, int radUserId, double radValue, String radUnit, String radLocationName, int radDeviceId, int radOriginalId, int radMeasurementImportId, String radTimestamp, double radHeight, int radDevicetypeId, int radSensorId, int radStationId, int radChannelId, double radLat, double radLng) {
+        this.radId = radId;
+        this.radUserId = radUserId;
+        this.radValue = radValue;
+        this.radUnit = radUnit;
+        this.radLocationName = radLocationName;
+        this.radDeviceId = radDeviceId;
+        this.radOriginalId = radOriginalId;
+        this.radMeasurementImportId = radMeasurementImportId;
+        this.radTimestamp = radTimestamp;
+        this.radHeight = radHeight;
+        this.radDevicetypeId = radDevicetypeId;
+        this.radSensorId = radSensorId;
+        this.radStationId = radStationId;
+        this.radChannelId = radChannelId;
+        this.radLat = radLat;
+        this.radLng = radLng;
         this.distance = 10;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getRadUnit() {
+        return radUnit;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setRadUnit(String radUnit) {
+        this.radUnit = radUnit;
     }
 
-    public double getValue() {
-        return value;
+    public double getRadValue() {
+        return radValue;
     }
 
-    public void setValue(double value) {
-        this.value=value;
+    public void setRadValue(double radValue) {
+        this.radValue = radValue;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public double getRadLat() {
+        return radLat;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setRadLat(double radLat) {
+        this.radLat = radLat;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public double getRadLng() {
+        return radLng;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setRadLng(double radLng) {
+        this.radLng = radLng;
     }
 
-    public String getCaptured_at() {
-        return captured_at;
+    public String getRadTimestamp() {
+        return radTimestamp;
     }
 
-    public void setCaptured_at(String captured_at) {
-        this.captured_at =captured_at;
+    public void setRadTimestamp(String radTimestamp) {
+        this.radTimestamp = radTimestamp;
     }
 
-    public int getId() {
-        return id;
+    public int getRadId() {
+        return radId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRadId(int radId) {
+        this.radId = radId;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getRadUserId() {
+        return radUserId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setRadUserId(int radUserId) {
+        this.radUserId = radUserId;
     }
 
-    public String getLocation_name() {
-        return location_name;
+    public String getRadLocationName() {
+        return radLocationName;
     }
 
-    public void setLocation_name(String location_name) {
-        this.location_name = location_name;
+    public void setRadLocationName(String radLocationName) {
+        this.radLocationName = radLocationName;
     }
 
-    public int getDevice_id() {
-        return device_id;
+    public int getRadDeviceId() {
+        return radDeviceId;
     }
 
-    public void setDevice_id(int device_id) {
-        this.device_id = device_id;
+    public void setRadDeviceId(int radDeviceId) {
+        this.radDeviceId = radDeviceId;
     }
 
-    public int getOriginal_id() {
-        return original_id;
+    public int getRadOriginalId() {
+        return radOriginalId;
     }
 
-    public void setOriginal_id(int original_id) {
-        this.original_id = original_id;
+    public void setRadOriginalId(int radOriginalId) {
+        this.radOriginalId = radOriginalId;
     }
 
-    public int getMeasurement_import_id() {
-        return measurement_import_id;
+    public int getRadMeasurementImportId() {
+        return radMeasurementImportId;
     }
 
-    public void setMeasurement_import_id(int measurement_import_id) {
-        this.measurement_import_id = measurement_import_id;
+    public void setRadMeasurementImportId(int radMeasurementImportId) {
+        this.radMeasurementImportId = radMeasurementImportId;
     }
 
-    public double getHeight() {
-        return height;
+    public double getRadHeight() {
+        return radHeight;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
+    public void setRadHeight(double radHeight) {
+        this.radHeight = radHeight;
     }
 
-    public int getDevicetype_id() {
-        return devicetype_id;
+    public int getRadDevicetypeId() {
+        return radDevicetypeId;
     }
 
-    public void setDevicetype_id(int devicetype_id) {
-        this.devicetype_id = devicetype_id;
+    public void setRadDevicetypeId(int radDevicetypeId) {
+        this.radDevicetypeId = radDevicetypeId;
     }
 
-    public int getSensor_id() {
-        return sensor_id;
+    public int getRadSensorId() {
+        return radSensorId;
     }
 
-    public void setSensor_id(int sensor_id) {
-        this.sensor_id = sensor_id;
+    public void setRadSensorId(int radSensorId) {
+        this.radSensorId = radSensorId;
     }
 
-    public int getStation_id() {
-        return station_id;
+    public int getRadStationId() {
+        return radStationId;
     }
 
-    public void setStation_id(int station_id) {
-        this.station_id = station_id;
+    public void setRadStationId(int radStationId) {
+        this.radStationId = radStationId;
     }
 
-    public int getChannel_id() {
-        return channel_id;
+    public int getRadChannelId() {
+        return radChannelId;
     }
 
-    public void setChannel_id(int channel_id) {
-        this.channel_id = channel_id;
+    public void setRadChannelId(int radChannelId) {
+        this.radChannelId = radChannelId;
     }
 
     public int getDistance() {

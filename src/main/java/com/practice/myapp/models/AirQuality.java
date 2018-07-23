@@ -1,30 +1,34 @@
 package com.practice.myapp.models;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class AirQuality {
-    private String status;
-    private Data data;
+    @SerializedName("status")
+    private String aqiStatus;
+    @SerializedName("data")
+    private Data aqiData;
 
     public AirQuality() { }
 
-    public AirQuality(String status, Data data) {
-        this.status=status;
-        this.data=data;
+    public AirQuality(String aqiStatus, Data aqiData) {
+        this.aqiStatus = aqiStatus;
+        this.aqiData = aqiData;
     }
 
-    public String getStatus() {
-        return status;
+    public String getAqiStatus() {
+        return aqiStatus;
     }
 
-    public void setStatus(String status) {
-        this.status=status;
+    public void setAqiStatus(String aqiStatus) {
+        this.aqiStatus = aqiStatus;
     }
 
-    public Data getData() {
-        return data;
+    public Data getAqiData() {
+        return aqiData;
     }
 
-    public void setData(Data data) {
-        this.data=data;
+    public void setAqiData(Data aqiData) {
+        this.aqiData = aqiData;
     }
 }

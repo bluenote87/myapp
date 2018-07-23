@@ -1,40 +1,45 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Pollutant {
-    private int conc;
-    private int aqius;
-    private int aqicn;
+    @SerializedName("conc")
+    private int plConcentration;
+    @SerializedName("aqius")
+    private int plAqiUs;
+    @SerializedName("aqicn")
+    private int plAqiCn;
 
     public Pollutant() {
     }
 
-    public Pollutant(int conc, int aqius, int aqicn) {
-        this.conc=conc;
-        this.aqius=aqius;
-        this.aqicn=aqicn;
+    public Pollutant(int plConcentration, int plAqiUs, int plAqiCn) {
+        this.plConcentration = plConcentration;
+        this.plAqiUs = plAqiUs;
+        this.plAqiCn = plAqiCn;
     }
 
-    public int getConc() {
-        return conc;
+    public int getPlConcentration() {
+        return plConcentration;
     }
 
-    public void setConc(int conc) {
-        this.conc=conc;
+    public void setPlConcentration(int plConcentration) {
+        this.plConcentration = plConcentration;
     }
 
-    public int getAqius() {
-        return aqius;
+    public int getPlAqiUs() {
+        return plAqiUs;
     }
 
-    public void setAqius(int aqius) {
-        this.aqius=aqius;
+    public void setPlAqiUs(int plAqiUs) {
+        this.plAqiUs = plAqiUs;
     }
 
-    public int getAqicn() {
-        return aqicn;
+    public int getPlAqiCn() {
+        return plAqiCn;
     }
 
-    public void setAqicn(int aqicn) {
-        this.aqicn=aqicn;
+    public void setPlAqiCn(int plAqiCn) {
+        this.plAqiCn = plAqiCn;
     }
 }

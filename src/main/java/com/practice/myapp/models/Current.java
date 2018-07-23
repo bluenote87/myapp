@@ -1,30 +1,34 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Current {
-    private Weather weather;
-    private Pollution pollution;
+    @SerializedName("weather")
+    private Weather aqiWeather;
+    @SerializedName("pollution")
+    private Pollution aqiPollution;
 
     public Current() {
     }
 
-    public Current(Weather weather, Pollution pollution) {
-        this.weather=weather;
-        this.pollution=pollution;
+    public Current(Weather aqiWeather, Pollution aqiPollution) {
+        this.aqiWeather = aqiWeather;
+        this.aqiPollution = aqiPollution;
     }
 
-    public Weather getWeather() {
-        return weather;
+    public Weather getAqiWeather() {
+        return aqiWeather;
     }
 
-    public void setWeather(Weather weather) {
-        this.weather=weather;
+    public void setAqiWeather(Weather aqiWeather) {
+        this.aqiWeather = aqiWeather;
     }
 
-    public Pollution getPollution() {
-        return pollution;
+    public Pollution getAqiPollution() {
+        return aqiPollution;
     }
 
-    public void setPollution(Pollution pollution) {
-        this.pollution=pollution;
+    public void setAqiPollution(Pollution aqiPollution) {
+        this.aqiPollution = aqiPollution;
     }
 }

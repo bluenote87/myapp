@@ -1,80 +1,89 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Weather {
-    private String ts;
-    private int tp;
-    private int pr;
-    private int hu;
-    private double ws;
-    private int wd;
-    private String ic;
+    @SerializedName("ts")
+    private String weatherTimestamp;
+    @SerializedName("tp")
+    private int tempCelsius;
+    @SerializedName("pr")
+    private int airPressure;
+    @SerializedName("hu")
+    private int humidity;
+    @SerializedName("ws")
+    private double windSpeed;
+    @SerializedName("wd")
+    private int windDirection;
+    @SerializedName("ic")
+    private String weatherIcon;
 
     public Weather() {
     }
 
-    public Weather(String ts, int tp, int pr, int hu, double ws, int wd, String ic) {
-        this.ts=ts;
-        this.tp=tp;
-        this.pr=pr;
-        this.hu=hu;
-        this.ws=ws;
-        this.wd=wd;
-        this.ic=ic;
+    public Weather(String weatherTimestamp, int tempCelsius, int airPressure, int humidity, double windSpeed, int windDirection, String weatherIcon) {
+        this.weatherTimestamp = weatherTimestamp;
+        this.tempCelsius = tempCelsius;
+        this.airPressure = airPressure;
+        this.humidity = humidity;
+        this.windSpeed = windSpeed;
+        this.windDirection = windDirection;
+        this.weatherIcon = weatherIcon;
     }
 
-    public String getTs() {
-        return ts;
+    public String getWeatherTimestamp() {
+        return weatherTimestamp;
     }
 
-    public void setTs(String ts) {
-        this.ts=ts;
+    public void setWeatherTimestamp(String weatherTimestamp) {
+        this.weatherTimestamp = weatherTimestamp;
     }
 
-    public int getTp() {
-        return tp;
+    public int getTempCelsius() {
+        return tempCelsius;
     }
 
-    public void setTp(int tp) {
-        this.tp=tp;
+    public void setTempCelsius(int tempCelsius) {
+        this.tempCelsius = tempCelsius;
     }
 
-    public int getPr() {
-        return pr;
+    public int getAirPressure() {
+        return airPressure;
     }
 
-    public void setPr(int pr) {
-        this.pr=pr;
+    public void setAirPressure(int airPressure) {
+        this.airPressure = airPressure;
     }
 
-    public int getHu() {
-        return hu;
+    public int getHumidity() {
+        return humidity;
     }
 
-    public void setHu(int hu) {
-        this.hu=hu;
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
     }
 
-    public double getWs() {
-        return ws;
+    public double getWindSpeed() {
+        return windSpeed;
     }
 
-    public void setWs(double ws) {
-        this.ws=ws;
+    public void setWindSpeed(double windSpeed) {
+        this.windSpeed = windSpeed;
     }
 
-    public int getWd() {
-        return wd;
+    public int getWindDirection() {
+        return windDirection;
     }
 
-    public void setWd(int wd) {
-        this.wd=wd;
+    public void setWindDirection(int windDirection) {
+        this.windDirection = windDirection;
     }
 
-    public String getIc() {
-        return ic;
+    public String getWeatherIcon() {
+        return weatherIcon;
     }
 
-    public void setIc(String ic) {
-        this.ic=ic;
+    public void setWeatherIcon(String weatherIcon) {
+        this.weatherIcon = weatherIcon;
     }
 }

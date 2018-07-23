@@ -26,11 +26,11 @@
                 </thead>
                 <tbody>
                     <tr th:each="entry : ${return}">
-                        <td th:text="${entry.unit}"></td>
-                        <td th:text="${entry.value}"></td>
-                        <td th:text="${entry.captured_at}"></td>
-                        <td th:text="${entry.latitude} + '°'"></td>
-                        <td th:text="${entry.longitude} + '°'"></td>
+                        <td th:text="${entry.radUnit}"></td>
+                        <td th:text="${entry.radValue}"></td>
+                        <td th:text="${entry.radTimestamp}"></td>
+                        <td th:text="${entry.radLat} + '°'"></td>
+                        <td th:text="${entry.radLng} + '°'"></td>
                     </tr>
                 </tbody>
             </table>
@@ -51,11 +51,11 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td th:text="${aqi.data.city}"></td>
-                        <td th:text="${aqi.data.current.pollution.aqius}"></td>
-                        <td th:text="${aqi.data.current.weather.wd}"></td>
-                        <td th:text="${aqi.data.current.weather.ws}"></td>
-                        <td th:text="${aqi.data.current.pollution.ts}"></td>
+                        <td th:text="${aqi.aqiData.aqiCity} + ', ' + ${aqi.aqiData.aqiCountry}"></td>
+                        <td th:text="${aqi.aqiData.aqiCurrent.aqiPollution.aqiUsStd}"></td>
+                        <td th:text="${aqi.aqiData.aqiCurrent.aqiWeather.windDirection}"></td>
+                        <td th:text="${aqi.aqiData.aqiCurrent.aqiWeather.windSpeed}"></td>
+                        <td th:text="${aqi.aqiData.aqiCurrent.aqiPollution.pollutionTimestamp}"></td>
                     </tr>
                 </tbody>
             </table>

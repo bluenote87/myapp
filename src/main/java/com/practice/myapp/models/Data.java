@@ -1,113 +1,125 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Data {
 
-    private String name;
-    private String local_name;
-    private String city;
-    private String state;
-    private String country;
-    private Location location;
-    private ArrayList<Forecasts> forecasts;
-    private Current current;
-    private History history;
-    private Units units;
+    @SerializedName("name")
+    private String aqiName;
+    @SerializedName("local_name")
+    private String aqiLocalName;
+    @SerializedName("city")
+    private String aqiCity;
+    @SerializedName("state")
+    private String aqiState;
+    @SerializedName("country")
+    private String aqiCountry;
+    @SerializedName("location")
+    private Location aqiLocation;
+    @SerializedName("forecasts")
+    private ArrayList<Forecasts> aqiForecasts;
+    @SerializedName("current")
+    private Current aqiCurrent;
+    @SerializedName("history")
+    private History aqiHistory;
+    @SerializedName("units")
+    private Units aqiUnits;
 
     public Data() {
     }
 
-    public Data(String name, String local_name, String city, String state, String country, Location location, ArrayList<Forecasts> forecasts, Current current, History history, Units units) {
-        this.name=name;
-        this.local_name=local_name;
-        this.city=city;
-        this.state=state;
-        this.country=country;
-        this.location=location;
-        this.forecasts=forecasts;
-        this.current=current;
-        this.history=history;
-        this.units=units;
+    public Data(String aqiName, String aqiLocalName, String aqiCity, String aqiState, String aqiCountry, Location aqiLocation, ArrayList<Forecasts> aqiForecasts, Current aqiCurrent, History aqiHistory, Units aqiUnits) {
+        this.aqiName = aqiName;
+        this.aqiLocalName = aqiLocalName;
+        this.aqiCity = aqiCity;
+        this.aqiState = aqiState;
+        this.aqiCountry = aqiCountry;
+        this.aqiLocation = aqiLocation;
+        this.aqiForecasts = aqiForecasts;
+        this.aqiCurrent = aqiCurrent;
+        this.aqiHistory = aqiHistory;
+        this.aqiUnits = aqiUnits;
     }
 
-    public String getName() {
-        return name;
+    public String getAqiName() {
+        return aqiName;
     }
 
-    public void setName(String name) {
-        this.name=name;
+    public void setAqiName(String aqiName) {
+        this.aqiName = aqiName;
     }
 
-    public String getLocal_name() {
-        return local_name;
+    public String getAqiLocalName() {
+        return aqiLocalName;
     }
 
-    public void setLocal_name(String local_name) {
-        this.local_name=local_name;
+    public void setAqiLocalName(String aqiLocalName) {
+        this.aqiLocalName = aqiLocalName;
     }
 
-    public String getCity() {
-        return city;
+    public String getAqiCity() {
+        return aqiCity;
     }
 
-    public void setCity(String city) {
-        this.city=city;
+    public void setAqiCity(String aqiCity) {
+        this.aqiCity = aqiCity;
     }
 
-    public String getState() {
-        return state;
+    public String getAqiState() {
+        return aqiState;
     }
 
-    public void setState(String state) {
-        this.state=state;
+    public void setAqiState(String aqiState) {
+        this.aqiState = aqiState;
     }
 
-    public String getCountry() {
-        return country;
+    public String getAqiCountry() {
+        return aqiCountry;
     }
 
-    public void setCountry(String country) {
-        this.country=country;
+    public void setAqiCountry(String aqiCountry) {
+        this.aqiCountry = aqiCountry;
     }
 
-    public Location getLocation() {
-        return location;
+    public Location getAqiLocation() {
+        return aqiLocation;
     }
 
-    public void setLocation(Location location) {
-        this.location=location;
+    public void setAqiLocation(Location aqiLocation) {
+        this.aqiLocation = aqiLocation;
     }
 
-    public ArrayList<Forecasts> getForecasts() {
-        return forecasts;
+    public ArrayList<Forecasts> getAqiForecasts() {
+        return aqiForecasts;
     }
 
-    public void setForecasts(ArrayList<Forecasts> forecasts) {
-        this.forecasts=forecasts;
+    public void setAqiForecasts(ArrayList<Forecasts> aqiForecasts) {
+        this.aqiForecasts = aqiForecasts;
     }
 
-    public Current getCurrent() {
-        return current;
+    public Current getAqiCurrent() {
+        return aqiCurrent;
     }
 
-    public void setCurrent(Current current) {
-        this.current=current;
+    public void setAqiCurrent(Current aqiCurrent) {
+        this.aqiCurrent = aqiCurrent;
     }
 
-    public History getHistory() {
-        return history;
+    public History getAqiHistory() {
+        return aqiHistory;
     }
 
-    public void setHistory(History history) {
-        this.history=history;
+    public void setAqiHistory(History aqiHistory) {
+        this.aqiHistory = aqiHistory;
     }
 
-    public Units getUnits() {
-        return units;
+    public Units getAqiUnits() {
+        return aqiUnits;
     }
 
-    public void setUnits(Units units) {
-        this.units=units;
+    public void setAqiUnits(Units aqiUnits) {
+        this.aqiUnits = aqiUnits;
     }
 }

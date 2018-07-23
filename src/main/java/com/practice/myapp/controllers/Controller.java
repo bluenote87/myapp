@@ -19,7 +19,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.Collection;
-import java.util.List;
 
 @org.springframework.stereotype.Controller
 @RequestMapping("/")
@@ -58,8 +57,8 @@ public class Controller {
         aqiDecodedString = "";
         aqiJson = "";
         int aDistance = newMeasurement.getDistance();
-        double aLatitude = newMeasurement.getLatitude();
-        double aLongitude = newMeasurement.getLongitude();
+        double aLatitude = newMeasurement.getRadLat();
+        double aLongitude = newMeasurement.getRadLng();
 
         BaseURL = "https://api.safecast.org/measurements.json";
         AqiURL = "https://api.airvisual.com/v2/nearest_city";
@@ -109,7 +108,7 @@ public class Controller {
         Type collectionType = new TypeToken<Collection<Measurements>>(){}.getType();
         Collection<Measurements> safeCastReturns = gson.fromJson(json, collectionType);
 
-        //Type aqiType = new TypeToken<Collection<AirQuality>>(){}.getType();
+        //Type aqiType = new TypeToken<Collection<AirQuality>>(){}.getLocationType();
         AirQuality airVisualReturn = aqiGson.fromJson(aqiJson, AirQuality.class);
 
         model.addAttribute("title", "Current readings at the given location");

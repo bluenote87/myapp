@@ -1,70 +1,78 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Pollution {
-    private String ts;
-    private int aqius;
-    private String mainus;
-    private int aqicn;
-    private String maincn;
-    private Pollutant p1;
+    @SerializedName("ts")
+    private String pollutionTimestamp;
+    @SerializedName("aqius")
+    private int aqiUsStd;
+    @SerializedName("mainus")
+    private String mainUsPollutant;
+    @SerializedName("aqicn")
+    private int aqiCnStd;
+    @SerializedName("maincn")
+    private String mainCnPollutant;
+    @SerializedName("pl")
+    private Pollutant aqiPollutant;
 
     public Pollution() {
     }
 
-    public Pollution(String ts, int aqius, String mainus, int aqicn, String maincn, Pollutant p1) {
-        this.ts=ts;
-        this.aqius=aqius;
-        this.mainus=mainus;
-        this.aqicn=aqicn;
-        this.maincn=maincn;
-        this.p1=p1;
+    public Pollution(String pollutionTimestamp, int aqiUsStd, String mainUsPollutant, int aqiCnStd, String mainCnPollutant, Pollutant aqiPollutant) {
+        this.pollutionTimestamp = pollutionTimestamp;
+        this.aqiUsStd = aqiUsStd;
+        this.mainUsPollutant = mainUsPollutant;
+        this.aqiCnStd = aqiCnStd;
+        this.mainCnPollutant = mainCnPollutant;
+        this.aqiPollutant = aqiPollutant;
     }
 
-    public String getTs() {
-        return ts;
+    public String getPollutionTimestamp() {
+        return pollutionTimestamp;
     }
 
-    public void setTs(String ts) {
-        this.ts=ts;
+    public void setPollutionTimestamp(String pollutionTimestamp) {
+        this.pollutionTimestamp = pollutionTimestamp;
     }
 
-    public int getAqius() {
-        return aqius;
+    public int getAqiUsStd() {
+        return aqiUsStd;
     }
 
-    public void setAqius(int aqius) {
-        this.aqius=aqius;
+    public void setAqiUsStd(int aqiUsStd) {
+        this.aqiUsStd = aqiUsStd;
     }
 
-    public String getMainus() {
-        return mainus;
+    public String getMainUsPollutant() {
+        return mainUsPollutant;
     }
 
-    public void setMainus(String mainus) {
-        this.mainus=mainus;
+    public void setMainUsPollutant(String mainUsPollutant) {
+        this.mainUsPollutant = mainUsPollutant;
     }
 
-    public int getAqicn() {
-        return aqicn;
+    public int getAqiCnStd() {
+        return aqiCnStd;
     }
 
-    public void setAqicn(int aqicn) {
-        this.aqicn=aqicn;
+    public void setAqiCnStd(int aqiCnStd) {
+        this.aqiCnStd = aqiCnStd;
     }
 
-    public String getMaincn() {
-        return maincn;
+    public String getMainCnPollutant() {
+        return mainCnPollutant;
     }
 
-    public void setMaincn(String maincn) {
-        this.maincn=maincn;
+    public void setMainCnPollutant(String mainCnPollutant) {
+        this.mainCnPollutant = mainCnPollutant;
     }
 
-    public Pollutant getP1() {
-        return p1;
+    public Pollutant getAqiPollutant() {
+        return aqiPollutant;
     }
 
-    public void setP1(Pollutant p1) {
-        this.p1=p1;
+    public void setAqiPollutant(Pollutant aqiPollutant) {
+        this.aqiPollutant = aqiPollutant;
     }
 }

@@ -1,70 +1,78 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Units {
-    private String p2;
-    private String p1;
-    private String o3;
-    private String n2;
-    private String s2;
-    private String co;
+    @SerializedName("p2")
+    private String pmTwoPointFive;
+    @SerializedName("p1")
+    private String pmTen;
+    @SerializedName("o3")
+    private String ozone;
+    @SerializedName("n2")
+    private String nitrogenDioxide;
+    @SerializedName("s2")
+    private String sulfurDioxide;
+    @SerializedName("co")
+    private String carbonMonoxide;
 
     public Units() {
     }
 
-    public Units(String p2, String p1, String o3, String n2, String s2, String co) {
-        this.p2 = p2;
-        this.p1 = p1;
-        this.o3 = o3;
-        this.n2 = n2;
-        this.s2 = s2;
-        this.co = co;
+    public Units(String pmTwoPointFive, String pmTen, String ozone, String nitrogenDioxide, String sulfurDioxide, String carbonMonoxide) {
+        this.pmTwoPointFive = pmTwoPointFive;
+        this.pmTen = pmTen;
+        this.ozone = ozone;
+        this.nitrogenDioxide = nitrogenDioxide;
+        this.sulfurDioxide = sulfurDioxide;
+        this.carbonMonoxide = carbonMonoxide;
     }
 
-    public String getP2() {
-        return p2;
+    public String getPmTwoPointFive() {
+        return pmTwoPointFive;
     }
 
-    public void setP2(String p2) {
-        this.p2 = p2;
+    public void setPmTwoPointFive(String pmTwoPointFive) {
+        this.pmTwoPointFive = pmTwoPointFive;
     }
 
-    public String getP1() {
-        return p1;
+    public String getPmTen() {
+        return pmTen;
     }
 
-    public void setP1(String p1) {
-        this.p1 = p1;
+    public void setPmTen(String pmTen) {
+        this.pmTen = pmTen;
     }
 
-    public String getO3() {
-        return o3;
+    public String getOzone() {
+        return ozone;
     }
 
-    public void setO3(String o3) {
-        this.o3 = o3;
+    public void setOzone(String ozone) {
+        this.ozone = ozone;
     }
 
-    public String getN2() {
-        return n2;
+    public String getNitrogenDioxide() {
+        return nitrogenDioxide;
     }
 
-    public void setN2(String n2) {
-        this.n2 = n2;
+    public void setNitrogenDioxide(String nitrogenDioxide) {
+        this.nitrogenDioxide = nitrogenDioxide;
     }
 
-    public String getS2() {
-        return s2;
+    public String getSulfurDioxide() {
+        return sulfurDioxide;
     }
 
-    public void setS2(String s2) {
-        this.s2 = s2;
+    public void setSulfurDioxide(String sulfurDioxide) {
+        this.sulfurDioxide = sulfurDioxide;
     }
 
-    public String getCo() {
-        return co;
+    public String getCarbonMonoxide() {
+        return carbonMonoxide;
     }
 
-    public void setCo(String co) {
-        this.co = co;
+    public void setCarbonMonoxide(String carbonMonoxide) {
+        this.carbonMonoxide = carbonMonoxide;
     }
 }

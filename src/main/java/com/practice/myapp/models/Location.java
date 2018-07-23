@@ -1,50 +1,56 @@
 package com.practice.myapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Location extends Data {
 
-    private String type;
-    private double latitude;
-    private double longitude;
-    private double [] coordinates = {latitude, longitude};
+    @SerializedName("type")
+    private String locationType;
+    @SerializedName("latitude")
+    private double locationLat;
+    @SerializedName("longitude")
+    private double locationLng;
+    @SerializedName("coordinates")
+    private double [] locationCoordinates = {locationLat, locationLng};
 
     public Location() {}
 
-    public Location(String type, double latitude, double longitude, double[] coordinates) {
-        this.type = type;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.coordinates = coordinates;
+    public Location(String locationType, double locationLat, double locationLng, double[] coordinates) {
+        this.locationType = locationType;
+        this.locationLat = locationLat;
+        this.locationLng = locationLng;
+        this.locationCoordinates = coordinates;
     }
 
-    public String getType() {
-        return type;
+    public String getLocationType() {
+        return locationType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLocationType(String locationType) {
+        this.locationType = locationType;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public double getLocationLat() {
+        return locationLat;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLocationLat(double locationLat) {
+        this.locationLat = locationLat;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public double getLocationLng() {
+        return locationLng;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLocationLng(double locationLng) {
+        this.locationLng = locationLng;
     }
 
-    public double[] getCoordinates() {
-        return coordinates;
+    public double[] getLocationCoordinates() {
+        return locationCoordinates;
     }
 
-    public void setCoordinates(double[] coordinates) {
-        this.coordinates = coordinates;
+    public void setLocationCoordinates(double[] locationCoordinates) {
+        this.locationCoordinates = locationCoordinates;
     }
 }
