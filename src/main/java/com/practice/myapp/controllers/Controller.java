@@ -3,6 +3,7 @@ package com.practice.myapp.controllers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.practice.myapp.models.AirQuality;
+import com.practice.myapp.models.GMap;
 import com.practice.myapp.models.Measurements;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -36,19 +37,35 @@ public class Controller {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("title", "Pick A Location");
-        model.addAttribute("measurements", new Measurements());
+        model.addAttribute("key", "https://maps.googleapis.com/maps/api/js?key=" + mapsKey + "&callback=initMap");
+        model.addAttribute("gmap", new GMap());
 
         return "index";
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String result(Model model,
+    public String mapsSearch(Model model, @ModelAttribute @Valid GMap newMap) {
+        model.addAttribute("title", "Result of this search");
+        model.addAttribute("address", newMap.getAddress());
+        return "maps-search";
+    }
+
+    @RequestMapping(value = "/manual", method=RequestMethod.GET)
+    public String manualSearch(Model model) {
+        model.addAttribute("title", "Pick A Location");
+        model.addAttribute("measurements", new Measurements());
+
+        return "manual-search";
+    }
+
+    @RequestMapping(value = "/manual", method = RequestMethod.POST)
+    public String manualResult(Model model,
                          @ModelAttribute @Valid Measurements newMeasurement,
                          Errors errors) throws IOException {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Pick A Location");
-            return "index";
+            return "manual-search";
         }
 
         decodedString = "";

@@ -4,23 +4,49 @@
 </head>
 <body>
 
-    <nav th:replace="fragments :: navigation"></nav>
+<nav th:replace="fragments :: navigation"></nav>
 
-    <form method="POST" style="max-width:600px" th:object="${measurements}">
+<div class="container"><div id="map"></div><form class="form-control" method="POST" th:object="${gmap}">
+    <div id="floating-panel">
+        <input id="address" type="textbox" value="The Gateway Arch, St. Louis, MO" th:field="*{address}">
+        <input id="submit" type="button" value="Encode">
+    </div>
+    <script>
+        initMap();
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'),{
+            center: {lat: 38.624976, lng: -90.184776},
+            zoom: 17
+            });
+            var geocoder = new google.maps.Geocoder();
 
-        <div class="form-group">
-            <label th:for="radLat">Enter latitude of measurement</label>
-            <input class="form-control" th:field="*{radLat}" />
-            <span th:errors="*{radLat}" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label th:for="radLng">Enter longitude of measurement</label>
-            <input class="form-control" th:field="*{radLng}" />
-            <span th:errors="*{radLng}" class="error"></span>
-        </div>
+            document.getElementById('submit').addEventListener('click', function() {
+                geocodeAddress(geocoder, map);
+            });
+        }
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = document.getElementById('address').value;
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+    <script th:attr="src=${key}"
+        async defer></script>
+    <div class="form-group">
+        <input type="submit" value="Find measurement here" />
 
-        <input type="submit" value="Find measurement" />
-    </form>
-
+        <p>OR</p>
+        <p><a href="/manual">Enter coordinates manually</a></p>
+    </div></form>
+</div>
 </body>
 </html>
