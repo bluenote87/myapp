@@ -8,7 +8,7 @@
 
 <div class="container"><div id="map"></div><form class="form-control" method="POST" th:object="${gmap}">
     <div id="floating-panel">
-        <input id="address" type="textbox" value="The Gateway Arch, St. Louis, MO" th:field="*{address}">
+        <input id="address" class="form-control" value="The Gateway Arch, St. Louis, MO" th:field="*{address}">
         <input id="submit" type="button" value="Encode">
     </div>
     <script>

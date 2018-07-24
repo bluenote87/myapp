@@ -45,8 +45,9 @@ public class Controller {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String mapsSearch(Model model, @ModelAttribute @Valid GMap newMap) {
+        String result = newMap.getAddress();
         model.addAttribute("title", "Result of this search");
-        model.addAttribute("address", newMap.getAddress());
+        model.addAttribute("address", result);
         return "maps-search";
     }
 
