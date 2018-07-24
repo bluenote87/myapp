@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 
 @org.springframework.stereotype.Controller
@@ -26,12 +27,16 @@ public class Controller {
 
     private String BaseURL = "https://api.safecast.org/measurements.json";
     private String AqiURL = "https://api.airvisual.com/v2/nearest_city";
+    private String geoURL = "https://maps.googleapis.com/maps/api/geocode/json";
     private String decodedString;
     private String json;
     private String aqiDecodedString;
     private String aqiJson;
+    private String geoDecodedString;
+    private String geoJson;
     private String mapsKey = "AIzaSyDen0WZLZt-OQ68yU5D5uoNb7sr34mdycQ";
     private String aqiKey = "3RDkWgP8CSpxMTGFM";
+    private String geocode;
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -44,10 +49,40 @@ public class Controller {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String mapsSearch(Model model, @ModelAttribute @Valid GMap newMap) {
+    public String mapsSearch(Model model, @ModelAttribute @Valid GMap newMap, Errors
+                             errors) throws IOException {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Pick A Location");
+            return "index";
+        }
+
         String result = newMap.getAddress();
+        geoJson = "";
+        geoDecodedString = "";
+
+        geocode = URLEncoder.encode(result, "UTF-8");
+
+        HttpsURLConnection geoCall = (HttpsURLConnection) (new URL(geoURL + "?address=" + geocode).openConnection());
+        geoCall.setRequestProperty("Content-Type", "application/json");
+        geoCall.setRequestProperty("Accept", "application/json");
+        geoCall.setRequestMethod("GET");
+        geoCall.connect();
+
+        try {
+            BufferedReader inreader = new BufferedReader(new InputStreamReader(geoCall.getInputStream()));
+            while ((geoDecodedString=inreader.readLine()) != null) {
+                geoJson+=geoDecodedString;
+            }
+            inreader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        geoCall.disconnect();
+
+
         model.addAttribute("title", "Result of this search");
-        model.addAttribute("address", result);
+        model.addAttribute("address", geoJson);
         return "maps-search";
     }
 
