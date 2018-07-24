@@ -1,68 +1,45 @@
 package com.practice.myapp.models;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class Measurements {
 
-    @Expose
     @SerializedName("id")
     private int radId;
-    @Expose
     @SerializedName("user_id")
     private int radUserId;
-    @Expose
     @SerializedName("value")
     private double radValue;
-    @Expose
     @SerializedName("unit")
     private String radUnit;
-    @Expose
     @SerializedName("location_name")
     private String radLocationName;
-    @Expose
     @SerializedName("device_id")
     private int radDeviceId;
-    @Expose
     @SerializedName("original_id")
     private int radOriginalId;
-    @Expose
     @SerializedName("mesaurement_import_id")
     private int radMeasurementImportId;
-    @Expose
     @SerializedName("captured_at")
     private String radTimestamp;
-    @Expose
     @SerializedName("height")
     private double radHeight;
-    @Expose
     @SerializedName("devicetype_id")
     private int radDevicetypeId;
-    @Expose
     @SerializedName("sensor_id")
     private int radSensorId;
-    @Expose
     @SerializedName("station_id")
     private int radStationId;
-    @Expose
     @SerializedName("channel_id")
     private int radChannelId;
-    @Expose
     @NotNull
     @SerializedName("latitude")
     private double radLat;
-    @Expose
     @NotNull
     @SerializedName("longitude")
     private double radLng;
-    @Min(10)
-    @Max(1000)
-    @NotNull
-    private int distance;
 
     public Measurements() {
     }
@@ -84,7 +61,6 @@ public class Measurements {
         this.radChannelId = radChannelId;
         this.radLat = radLat;
         this.radLng = radLng;
-        this.distance = 10;
     }
 
     public String getRadUnit() {
@@ -215,9 +191,4 @@ public class Measurements {
         this.radChannelId = radChannelId;
     }
 
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) { this.distance=distance; }
 }

@@ -1,7 +1,6 @@
 package com.practice.myapp.controllers;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.practice.myapp.models.AirQuality;
 import com.practice.myapp.models.Measurements;
@@ -24,8 +23,8 @@ import java.util.Collection;
 @RequestMapping("/")
 public class Controller {
 
-    private String BaseURL;
-    private String AqiURL;
+    private String BaseURL = "https://api.safecast.org/measurements.json";
+    private String AqiURL = "https://api.airvisual.com/v2/nearest_city";
     private String decodedString;
     private String json;
     private String aqiDecodedString;
@@ -56,25 +55,21 @@ public class Controller {
         json = "";
         aqiDecodedString = "";
         aqiJson = "";
-        int aDistance = newMeasurement.getDistance();
+        int aDistance = 1000;
         double aLatitude = newMeasurement.getRadLat();
         double aLongitude = newMeasurement.getRadLng();
 
-        BaseURL = "https://api.safecast.org/measurements.json";
-        AqiURL = "https://api.airvisual.com/v2/nearest_city";
+        Gson gson = new Gson();
 
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        Gson aqiGson = new Gson();
-
-        HttpsURLConnection apiCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
+        HttpsURLConnection scCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
             + "&latitude=" + aLatitude + "&longitude=" + aLongitude).openConnection());
-        apiCall.setRequestProperty("Content-Type", "application/json");
-        apiCall.setRequestProperty("Accept", "application/json");
-        apiCall.setRequestMethod("GET");
-        apiCall.connect();
+        scCall.setRequestProperty("Content-Type", "application/json");
+        scCall.setRequestProperty("Accept", "application/json");
+        scCall.setRequestMethod("GET");
+        scCall.connect();
 
         try {
-            BufferedReader inreader = new BufferedReader(new InputStreamReader(apiCall.getInputStream()));
+            BufferedReader inreader = new BufferedReader(new InputStreamReader(scCall.getInputStream()));
             while ((decodedString=inreader.readLine()) != null) {
                 json+=decodedString;
             }
@@ -83,11 +78,10 @@ public class Controller {
             e.printStackTrace();
         }
 
-        apiCall.disconnect();
+        scCall.disconnect();
 
         HttpsURLConnection aqiCall = (HttpsURLConnection) (new URL(AqiURL + "?lat=" + aLatitude
             + "&lon=" + aLongitude + "&key=" + aqiKey)).openConnection();
-
         aqiCall.setRequestProperty("Content-Type", "application/json");
         aqiCall.setRequestProperty("Accept", "application/json");
         aqiCall.setRequestMethod("GET");
@@ -108,8 +102,7 @@ public class Controller {
         Type collectionType = new TypeToken<Collection<Measurements>>(){}.getType();
         Collection<Measurements> safeCastReturns = gson.fromJson(json, collectionType);
 
-        //Type aqiType = new TypeToken<Collection<AirQuality>>(){}.getLocationType();
-        AirQuality airVisualReturn = aqiGson.fromJson(aqiJson, AirQuality.class);
+        AirQuality airVisualReturn = gson.fromJson(aqiJson, AirQuality.class);
 
         model.addAttribute("title", "Current readings at the given location");
         model.addAttribute("return", safeCastReturns);
