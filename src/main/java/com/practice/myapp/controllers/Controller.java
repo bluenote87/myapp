@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.practice.myapp.models.AirQuality;
 import com.practice.myapp.models.GMap;
+import com.practice.myapp.models.Geo;
 import com.practice.myapp.models.Measurements;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -25,25 +26,27 @@ import java.util.Collection;
 @RequestMapping("/")
 public class Controller {
 
-    private String BaseURL = "https://api.safecast.org/measurements.json";
-    private String AqiURL = "https://api.airvisual.com/v2/nearest_city";
-    private String geoURL = "https://maps.googleapis.com/maps/api/geocode/json";
+    private static String BaseURL = "https://api.safecast.org/measurements.json";
+    private static String AqiURL = "https://api.airvisual.com/v2/nearest_city";
+    private static String geoURL = "https://maps.googleapis.com/maps/api/geocode/json";
     private String decodedString;
     private String json;
     private String aqiDecodedString;
     private String aqiJson;
     private String geoDecodedString;
     private String geoJson;
-    private String mapsKey = "AIzaSyDen0WZLZt-OQ68yU5D5uoNb7sr34mdycQ";
-    private String aqiKey = "3RDkWgP8CSpxMTGFM";
+    private static String mapsKey = "AIzaSyDen0WZLZt-OQ68yU5D5uoNb7sr34mdycQ";
+    private static String aqiKey = "3RDkWgP8CSpxMTGFM";
     private String geocode;
+    private static Gson gson = new Gson();
+
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("title", "Pick A Location");
         model.addAttribute("key", "https://maps.googleapis.com/maps/api/js?key=" + mapsKey + "&callback=initMap");
-        model.addAttribute("gmap", new GMap());
+        model.addAttribute("gmap", new GMap("The Gateway Arch, St. Louis, MO"));
 
         return "index";
     }
@@ -56,34 +59,22 @@ public class Controller {
             return "index";
         }
 
-        String result = newMap.getAddress();
-        geoJson = "";
-        geoDecodedString = "";
+        Geo geoReturn = getGeo(newMap.getAddress());
 
-        geocode = URLEncoder.encode(result, "UTF-8");
+        double aLatitude = geoReturn.getResults().get(0).getGeometry().getMarker().getGeoLatitude();
+        double aLongitude = geoReturn.getResults().get(0).getGeometry().getMarker().getGeoLongitude();
 
-        HttpsURLConnection geoCall = (HttpsURLConnection) (new URL(geoURL + "?address=" + geocode).openConnection());
-        geoCall.setRequestProperty("Content-Type", "application/json");
-        geoCall.setRequestProperty("Accept", "application/json");
-        geoCall.setRequestMethod("GET");
-        geoCall.connect();
+        Collection<Measurements> safeCastReturns = getMeasurements(aLatitude, aLongitude);
 
-        try {
-            BufferedReader inreader = new BufferedReader(new InputStreamReader(geoCall.getInputStream()));
-            while ((geoDecodedString=inreader.readLine()) != null) {
-                geoJson+=geoDecodedString;
-            }
-            inreader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AirQuality airVisualReturn = getAQI(aLatitude, aLongitude);
 
-        geoCall.disconnect();
-
-
-        model.addAttribute("title", "Result of this search");
-        model.addAttribute("address", geoJson);
-        return "maps-search";
+        model.addAttribute("title", "Current readings at the given location");
+        model.addAttribute("return", safeCastReturns);
+        model.addAttribute("latitude", aLatitude);
+        model.addAttribute("longitude", aLongitude);
+        model.addAttribute("key", mapsKey);
+        model.addAttribute("aqi", airVisualReturn);
+        return "result";
     }
 
     @RequestMapping(value = "/manual", method=RequestMethod.GET)
@@ -104,18 +95,26 @@ public class Controller {
             return "manual-search";
         }
 
+        Collection<Measurements> safeCastReturns = getMeasurements(newMeasurement.getRadLat(), newMeasurement.getRadLng());
+
+        AirQuality airVisualReturn = getAQI(newMeasurement.getRadLat(), newMeasurement.getRadLng());
+
+        model.addAttribute("title", "Current readings at the given location");
+        model.addAttribute("return", safeCastReturns);
+        model.addAttribute("latitude", newMeasurement.getRadLat());
+        model.addAttribute("longitude", newMeasurement.getRadLng());
+        model.addAttribute("key", mapsKey);
+        model.addAttribute("aqi", airVisualReturn);
+
+        return "result";
+    }
+
+    public Collection<Measurements> getMeasurements(double lat, double lng) throws IOException {
+        int distance = 1200;
         decodedString = "";
         json = "";
-        aqiDecodedString = "";
-        aqiJson = "";
-        int aDistance = 1000;
-        double aLatitude = newMeasurement.getRadLat();
-        double aLongitude = newMeasurement.getRadLng();
-
-        Gson gson = new Gson();
-
-        HttpsURLConnection scCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + aDistance
-            + "&latitude=" + aLatitude + "&longitude=" + aLongitude).openConnection());
+        HttpsURLConnection scCall = (HttpsURLConnection) (new URL(BaseURL + "?distance=" + distance
+                + "&latitude=" + lat + "&longitude=" + lng).openConnection());
         scCall.setRequestProperty("Content-Type", "application/json");
         scCall.setRequestProperty("Accept", "application/json");
         scCall.setRequestMethod("GET");
@@ -133,8 +132,17 @@ public class Controller {
 
         scCall.disconnect();
 
-        HttpsURLConnection aqiCall = (HttpsURLConnection) (new URL(AqiURL + "?lat=" + aLatitude
-            + "&lon=" + aLongitude + "&key=" + aqiKey)).openConnection();
+        Type collectionType = new TypeToken<Collection<Measurements>>(){}.getType();
+        Collection<Measurements> results = gson.fromJson(json, collectionType);
+        return results;
+    }
+
+    public AirQuality getAQI(double lat, double lng) throws IOException {
+        aqiDecodedString = "";
+        aqiJson = "";
+
+        HttpsURLConnection aqiCall = (HttpsURLConnection) (new URL(AqiURL + "?lat=" + lat
+                + "&lon=" + lng + "&key=" + aqiKey)).openConnection();
         aqiCall.setRequestProperty("Content-Type", "application/json");
         aqiCall.setRequestProperty("Accept", "application/json");
         aqiCall.setRequestMethod("GET");
@@ -152,18 +160,34 @@ public class Controller {
 
         aqiCall.disconnect();
 
-        Type collectionType = new TypeToken<Collection<Measurements>>(){}.getType();
-        Collection<Measurements> safeCastReturns = gson.fromJson(json, collectionType);
+        AirQuality results = gson.fromJson(aqiJson, AirQuality.class);
+        return results;
+    }
+    public Geo getGeo(String query) throws IOException {
+        geoJson = "";
+        geoDecodedString = "";
 
-        AirQuality airVisualReturn = gson.fromJson(aqiJson, AirQuality.class);
+        geocode = URLEncoder.encode(query, "UTF-8");
 
-        model.addAttribute("title", "Current readings at the given location");
-        model.addAttribute("return", safeCastReturns);
-        model.addAttribute("latitude", aLatitude);
-        model.addAttribute("longitude", aLongitude);
-        model.addAttribute("key", mapsKey);
-        model.addAttribute("aqi", airVisualReturn);
+        HttpsURLConnection geoCall = (HttpsURLConnection) (new URL(geoURL + "?address=" + geocode).openConnection());
+        geoCall.setRequestProperty("Content-Type", "application/json");
+        geoCall.setRequestProperty("Accept", "application/json");
+        geoCall.setRequestMethod("GET");
+        geoCall.connect();
 
-        return "result";
+        try {
+            BufferedReader geoReader = new BufferedReader(new InputStreamReader(geoCall.getInputStream()));
+            while ((geoDecodedString=geoReader.readLine()) != null) {
+                geoJson+=geoDecodedString;
+            }
+            geoReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        geoCall.disconnect();
+
+        Geo results = gson.fromJson(geoJson, Geo.class);
+        return results;
     }
 }
