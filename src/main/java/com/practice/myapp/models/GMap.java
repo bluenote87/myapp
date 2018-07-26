@@ -1,7 +1,12 @@
 package com.practice.myapp.models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class GMap {
 
+    @NotNull
+    @Size(min=3)
     private String address;
 
     public GMap() {

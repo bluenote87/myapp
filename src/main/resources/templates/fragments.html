@@ -24,28 +24,47 @@
             padding: 5px;
         }
         #map {
-            height: 500px;
-            width: 500px;
+            height: 768px;
+            width: 1024px;
+            position: inherit;
         }
         #floating-panel {
             position: absolute;
-            top: 10px;
-            left: 25%;
+            top: 80px;
+            left: 35%;
             z-index: 5;
             background-color: #fff;
-            padding: 5px;
+            padding: 10px;
             border: 1px solid #999;
             text-align: center;
-            font-family: 'Roboto','sans-serif';
-            line-height: 30px;
-            padding-left: 10px;
+            line-height: normal;
+            padding-left: 15px;
+        }
+        .error {
+            color: red;
+        }
+        .logo {
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
         }
     </style>
+    <link id="favicon" rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
 </head>
 <body>
 
-    <nav th:fragment="navigation">
-        <a href="/">Make new query</a>
+    <nav th:fragment="navigation" class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="navbar-brand" href="#"><img src="favicon.png" alt="Logo" class="logo"></a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand" href="#">RadCheck</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">New search</a>
+            </li>
+        </ul>
     </nav>
 
 </body>

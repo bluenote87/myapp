@@ -8,8 +8,8 @@
 
 <div class="container"><div id="map"></div><form class="form-control" method="POST" th:object="${gmap}">
     <div id="floating-panel">
-        <input id="address" type="search" class="form-control" value="The Gateway Arch, St. Louis, MO" th:field="*{address}">
-        <input id="submit" type="button" class="btn btn-default" value="🔍Locate">
+        <div><input id="address" type="search" class="form-control" th:value="${address}" th:field="*{address}" autofocus></div>
+        <div><button id="locate" type="button" class="btn btn-primary">🔍Locate</button></div>
     </div>
     <script>
         initMap();
@@ -20,7 +20,7 @@
             });
             var geocoder = new google.maps.Geocoder();
 
-            document.getElementById('submit').addEventListener('click', function() {
+            document.getElementById('locate').addEventListener('click', function() {
                 geocodeAddress(geocoder, map);
             });
         }
@@ -42,10 +42,9 @@
     <script th:attr="src=${key}"
         async defer></script>
     <div class="form-group">
-        <input type="submit" value="Find measurement here" />
-
-        <p>OR</p>
-        <p><a href="/manual">Enter coordinates manually</a></p>
+        <input type="submit" class="btn btn-default" value="Find measurement here" />
+        <span th:errors="*{address}" class="error"></span>
+        <p>You can also find a measurement by <a href="/manual">entering coordinates manually.</a></p>
     </div></form>
 </div>
 </body>

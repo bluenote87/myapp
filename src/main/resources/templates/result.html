@@ -37,6 +37,7 @@
         </div>
         <div class="col">
             <iframe width="475" height="350" frameborder="0" style="border: 2px solid MediumSeaGreen" th:attr="src='https://www.google.com/maps/embed/v1/view?zoom=15&amp;center=' + ${latitude} + '%2C' + ${longitude} + '&amp;key=' + ${key}"></iframe>
+            <p><a th:attr="href='https://safecast.org/tilemap/?y=' + ${latitude} + '&amp;x=' + ${longitude} + '&amp;z=15&amp;l=1&amp;m=0'" target="_blank">View this measurement result on Safecast.</a></p>
         </div>
         <div class="col">
             <table class="table-striped" style="padding:8px">

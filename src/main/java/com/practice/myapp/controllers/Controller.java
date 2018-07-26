@@ -44,9 +44,11 @@ public class Controller {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
+        String address = "The Gateway Arch, St. Louis, MO";
         model.addAttribute("title", "Pick A Location");
         model.addAttribute("key", "https://maps.googleapis.com/maps/api/js?key=" + mapsKey + "&callback=initMap");
-        model.addAttribute("gmap", new GMap("The Gateway Arch, St. Louis, MO"));
+        model.addAttribute("address", address);
+        model.addAttribute("gmap", new GMap(address));
 
         return "index";
     }
@@ -56,10 +58,22 @@ public class Controller {
                              errors) throws IOException {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Pick A Location");
+            model.addAttribute("key", "https://maps.googleapis.com/maps/api/js?key=" + mapsKey + "&callback=initMap");
+            model.addAttribute("gmap", newMap);
+            model.addAttribute("address", newMap.getAddress());
             return "index";
         }
 
         Geo geoReturn = getGeo(newMap.getAddress());
+
+        if (geoReturn.getResults().size() == 0) {
+            // add an alert here about the maps API failing
+            model.addAttribute("title", "Pick A Location");
+            model.addAttribute("key", "https://maps.googleapis.com/maps/api/js?key=" + mapsKey + "&callback=initMap");
+            model.addAttribute("gmap", newMap);
+            model.addAttribute("address", newMap.getAddress());
+            return "index";
+        }
 
         double aLatitude = geoReturn.getResults().get(0).getGeometry().getMarker().getGeoLatitude();
         double aLongitude = geoReturn.getResults().get(0).getGeometry().getMarker().getGeoLongitude();
@@ -68,7 +82,7 @@ public class Controller {
 
         AirQuality airVisualReturn = getAQI(aLatitude, aLongitude);
 
-        model.addAttribute("title", "Current readings at the given location");
+        model.addAttribute("title", "Current readings at this location");
         model.addAttribute("return", safeCastReturns);
         model.addAttribute("latitude", aLatitude);
         model.addAttribute("longitude", aLongitude);
@@ -92,17 +106,34 @@ public class Controller {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Pick A Location");
+            model.addAttribute("measurements", newMeasurement);
             return "manual-search";
         }
 
-        Collection<Measurements> safeCastReturns = getMeasurements(newMeasurement.getRadLat(), newMeasurement.getRadLng());
+        double aLatitude = newMeasurement.getRadLat();
+        double aLongitude = newMeasurement.getRadLng();
 
-        AirQuality airVisualReturn = getAQI(newMeasurement.getRadLat(), newMeasurement.getRadLng());
+        if (aLatitude > 90.0) {
+            aLatitude = 90.0;
+        }
+        if (aLatitude < -90.0) {
+            aLatitude = -90.0;
+        }
+        if (aLongitude > 180.0) {
+            aLongitude = 180.0;
+        }
+        if (aLongitude < -180.0) {
+            aLongitude = -180.0;
+        }
+
+        Collection<Measurements> safeCastReturns = getMeasurements(aLatitude, aLongitude);
+
+        AirQuality airVisualReturn = getAQI(aLatitude, aLongitude);
 
         model.addAttribute("title", "Current readings at the given location");
         model.addAttribute("return", safeCastReturns);
-        model.addAttribute("latitude", newMeasurement.getRadLat());
-        model.addAttribute("longitude", newMeasurement.getRadLng());
+        model.addAttribute("latitude", aLatitude);
+        model.addAttribute("longitude", aLongitude);
         model.addAttribute("key", mapsKey);
         model.addAttribute("aqi", airVisualReturn);
 
